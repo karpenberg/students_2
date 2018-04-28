@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { Course, ICource } from './model/course';
-import { Student } from './model/student';
+import { Student, IStudent } from './model/student';
 
 @Component({
   selector: 'app-root',
@@ -9,7 +9,7 @@ import { Student } from './model/student';
 })
 export class AppComponent {
   title;
-  course:ICource;
+  course:ICource<IStudent>;
   constructor(){   
     var sergey = new Student('sergey', 'karpovich', '01/20/1993', [90, 60, 90]);
     var andrey = new Student('karpovich', 'andrey', '03/28/1986', [90, 80, 90]);

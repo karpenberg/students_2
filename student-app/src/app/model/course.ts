@@ -1,15 +1,15 @@
 import { Student, IStudent } from "./student";
 
-export interface ICource {    
-    students: IStudent[];
+export interface ICource<T extends  IStudent> {    
+    students: T[];
     getAttendance(lastName?:string):number;
     getPerformance(lastName?:string):number;
 }
 
-export class Course implements ICource
+export class Course<T extends  IStudent> implements ICource<T>
  {
-    students: IStudent[];
-    constructor(students:IStudent[]) {      
+    students: T[];
+    constructor(students:T[]) {      
         this.students = students;
     }
     getAttendance(lastName?:string):number {        
