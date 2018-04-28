@@ -1,21 +1,27 @@
-export class Student {
-    private marks: number[];
-    private absence: boolean[];
-    private absenceIndex: 0;
+import { Results } from "./result";
 
-    public firstName: string;
-    public lastName: string;
-    public birthDay: string;
-    public age: number;
-    public averageMark: number;
+export interface IStudent {
+    averageMark: number;
+    averagePresence: number;
+    lastName:string;
+    absent();
+    present();
+    summary:string;   
+}
+
+export class Student implements IStudent {
+    marks: number[];
+    absence: boolean[];
+    absenceIndex: 0;
+
+    firstName: string;
+    lastName: string;
+    birthDay: string;
+    age: number;
+    averageMark: number;
 
     readonly presenceFactor = 0.9;
     readonly goodMarksMin = 90;
-    readonly results = {
-        BAD: "Редиска!",
-        NORMAL: "Норм, но можно лучше",
-        GOOD: "Ути какой молодчинка!"
-    };
 
     private getAge(dateString) {
         var today = new Date();
@@ -39,33 +45,33 @@ export class Student {
         this.averageMark = this.marks.reduce((r, m) => r + m) / this.marks.length;
     }
 
-    public get averagePresence(): number {
+    get averagePresence(): number {
         var precenceCount = this.absence.slice(0, this.absenceIndex).filter(x => x).length;
         return precenceCount / this.absenceIndex;
     }
 
 
-    public absent() {
+    absent() {
         if (this.absence.length > this.absenceIndex) {
             this.absence[this.absenceIndex] = false;
             this.absenceIndex++;
         }
     };
 
-    public present() {
+    present() {
         if (this.absence.length > this.absenceIndex) {
             this.absence[this.absenceIndex] = true;
             this.absenceIndex++;
         }
     };
 
-    public summary() {
+    get summary(): string {
         if (this.averageMark < this.goodMarksMin && this.averagePresence < this.presenceFactor) {
-            console.log(this.results.BAD);
+            return Results.Bad;
         } else if (this.averageMark < this.goodMarksMin || this.averagePresence < this.presenceFactor)
-            console.log(this.results.NORMAL);
+            return Results.Normal;
         else
-            console.log(this.results.GOOD);
+            return Results.Good;
     }
 }
 
